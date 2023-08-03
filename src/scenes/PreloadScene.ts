@@ -15,6 +15,12 @@ class PreloadScene extends Scene {
       "assets/sprites/dragon.png",
       "assets/sprites/dragon.json"
     );
+
+    this.load.atlas(
+      "enemy",
+      "assets/sprites/enemy.png",
+      "assets/sprites/enemy.json"
+    );
   }
 
   create() {

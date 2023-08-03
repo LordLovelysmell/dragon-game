@@ -1,28 +1,21 @@
 import { GameObjects, Physics, Scene } from "phaser";
 import type { GameScene } from "../scenes/GameScene";
+import { Enemy } from "./Enemy";
 
-class Player extends GameObjects.Sprite {
-  private _scene: GameScene;
-  private _velocity = 500;
-
+class Player extends Enemy {
   constructor(scene: GameScene) {
-    super(scene, 150, scene.sys.canvas.height / 2, "dragon", 0);
-
-    this._scene = scene;
+    super(150, scene.sys.canvas.height / 2, "dragon", "dragon1", scene);
 
     this._init();
   }
 
-  private _init() {
+  protected _init() {
     this._scene.add.existing(this);
     this._scene.physics.add.existing(this);
-
-    this._scene.update = () => {
-      this._checkMovement();
-    };
+    this._velocity = 500;
   }
 
-  private _checkMovement() {
+  public move() {
     if (this.body instanceof Physics.Arcade.Body) {
       this.body.setVelocity(0);
 
