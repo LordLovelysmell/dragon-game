@@ -10,11 +10,14 @@ class PreloadScene extends Scene {
   }
 
   preload() {
-    console.log("PreloadScene.preload");
+    this.load.atlas(
+      "dragon",
+      "assets/sprites/dragon.png",
+      "assets/sprites/dragon.json"
+    );
   }
 
   create() {
-    console.log("PreloadScene.created");
     this.scene.start("Start");
   }
 

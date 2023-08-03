@@ -8,8 +8,6 @@ class StartScene extends Scene {
   }
 
   create() {
-    console.log("StartScene.create");
-
     this._createBackground();
 
     this._createText();
