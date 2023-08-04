@@ -1,22 +1,23 @@
 import { Physics } from "phaser";
 import { Time } from "phaser";
 
+import type { Scene } from "phaser";
+
 import { Enemy } from "./Enemy";
+
 import type { GameScene } from "../scenes/GameScene";
 
 class Enemies extends Physics.Arcade.Group {
-  private _scene: GameScene;
   private _timer: Time.TimerEvent;
   private _enemiesMaxCount: number;
   private _enemiesCreatedCount: number;
 
-  constructor(scene: GameScene) {
+  constructor(scene: Scene) {
     super(scene.physics.world, scene);
 
-    this._scene = scene;
     this._enemiesMaxCount = 10;
     this._enemiesCreatedCount = 0;
-    this._timer = this._scene.time.addEvent({
+    this._timer = this.scene.time.addEvent({
       loop: true,
       delay: 1000,
       callback: this._onTimerTick,
@@ -33,13 +34,13 @@ class Enemies extends Physics.Arcade.Group {
   }
 
   public createEnemies() {
-    let enemy = this.getFirstDead();
+    let enemy = this.getFirstDead() as Enemy;
 
     if (!enemy) {
-      enemy = Enemy.generate(this._scene);
+      enemy = Enemy.generate(this.scene as GameScene);
       this.add(enemy);
     } else {
-      enemy.reset();
+      enemy.reuse();
     }
 
     this._enemiesCreatedCount++;
