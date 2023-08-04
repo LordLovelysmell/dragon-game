@@ -25,7 +25,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Memory Game",
+      title: "Dragon Game",
     }),
   ],
   optimization: {

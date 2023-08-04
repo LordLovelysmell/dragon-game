@@ -4,7 +4,7 @@ import { Enemy } from "./Enemy";
 
 class Player extends Enemy {
   constructor(scene: GameScene) {
-    super(150, scene.sys.canvas.height / 2, "dragon", "dragon1", scene);
+    super(300, scene.sys.canvas.height / 2, "dragon", "dragon1", scene);
 
     this._init();
   }

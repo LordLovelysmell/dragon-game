@@ -8,12 +8,14 @@ class Enemies extends Physics.Arcade.Group {
   private _scene: GameScene;
   private _timer: Time.TimerEvent;
   private _enemiesMaxCount: number;
+  private _enemiesCreatedCount: number;
 
   constructor(scene: GameScene) {
     super(scene.physics.world, scene);
 
     this._scene = scene;
     this._enemiesMaxCount = 10;
+    this._enemiesCreatedCount = 0;
     this._timer = this._scene.time.addEvent({
       loop: true,
       delay: 1000,
@@ -25,13 +27,23 @@ class Enemies extends Physics.Arcade.Group {
   private _onTimerTick() {
     this.createEnemies();
 
-    if (this.getLength() >= this._enemiesMaxCount) {
+    if (this._enemiesCreatedCount >= this._enemiesMaxCount) {
       this._timer.destroy();
     }
   }
 
   public createEnemies() {
-    const enemy = Enemy.generate(this._scene);
+    let enemy = this.getFirstDead();
+
+    if (!enemy) {
+      enemy = Enemy.generate(this._scene);
+      this.add(enemy);
+    } else {
+      enemy.reset();
+    }
+
+    this._enemiesCreatedCount++;
+
     this.add(enemy);
     enemy.move();
   }
