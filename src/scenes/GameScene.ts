@@ -4,6 +4,7 @@ import type { Types } from "phaser";
 import { Player } from "../prefabs/Player";
 import { Enemy } from "../prefabs/Enemy";
 import { Enemies } from "../prefabs/Enemies";
+import { Fire } from "../prefabs/Fire";
 
 class GameScene extends Scene {
   private _player: Player;
@@ -23,6 +24,8 @@ class GameScene extends Scene {
     this._createBackground();
     this._player = new Player(this);
     const enemies = new Enemies(this);
+    // const fire = Fire.generate(this._player, this);
+    // fire.move();
   }
 
   update(time: number, deltaTime: number) {

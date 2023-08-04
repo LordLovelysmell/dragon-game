@@ -21,6 +21,8 @@ class PreloadScene extends Scene {
       "assets/sprites/enemy.png",
       "assets/sprites/enemy.json"
     );
+
+    this.load.image("fire", "assets/sprites/fire.png");
   }
 
   create() {

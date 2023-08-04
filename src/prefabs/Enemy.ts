@@ -22,7 +22,7 @@ class Enemy extends GameObjects.Sprite {
   private static _generateAttributes(scene: GameScene) {
     const x = scene.sys.canvas.width + 200;
     const y = Math.Between(100, scene.sys.canvas.height - 100);
-    const id = Math.Between(0, 4);
+    const id = Math.Between(1, 4);
 
     return { x, y, id };
   }

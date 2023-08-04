@@ -1,8 +1,12 @@
 import { GameObjects, Physics, Scene } from "phaser";
 import type { GameScene } from "../scenes/GameScene";
 import { Enemy } from "./Enemy";
+import { Fires } from "./Fires";
 
 class Player extends Enemy {
+  private _fires: Fires;
+  private _timer: Phaser.Time.TimerEvent;
+
   constructor(scene: GameScene) {
     super(300, scene.sys.canvas.height / 2, "dragon", "dragon1", scene);
 
@@ -13,6 +17,21 @@ class Player extends Enemy {
     this._scene.add.existing(this);
     this._scene.physics.add.existing(this);
     this._velocity = 500;
+
+    this._fires = new Fires(this._scene);
+
+    this._timer = this._scene.time.addEvent({
+      loop: true,
+      delay: 500,
+      callback: this._onTimerTick,
+      callbackScope: this,
+    });
+
+    this._fires.createFire(this);
+  }
+
+  private _onTimerTick() {
+    this._fires.createFire(this);
   }
 
   public move() {
