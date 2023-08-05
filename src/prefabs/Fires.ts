@@ -1,25 +1,30 @@
-import { Physics, Scene } from "phaser";
+import { Physics } from "phaser";
+
+import type { Scene } from "phaser";
 
 import { Fire } from "./Fire";
-import { Player } from "./Player";
+
+import type { BulletConfig, Enemy } from "./Enemy";
 
 class Fires extends Physics.Arcade.Group {
   private _firesCreatedCount: number;
+  private _bulletConfig: BulletConfig;
 
-  constructor(scene: Scene) {
+  constructor(bulletConfig: BulletConfig, scene: Scene) {
     super(scene.physics.world, scene);
 
     this._firesCreatedCount = 0;
+    this._bulletConfig = bulletConfig;
   }
 
-  public createFire(player: Player) {
+  public createFire(unit: Enemy) {
     let fire = this.getFirstDead() as Fire;
 
     if (!fire) {
-      fire = Fire.generate(player, this.scene);
+      fire = Fire.generate(unit, this._bulletConfig, this.scene);
       this.add(fire);
     } else {
-      fire.reuse(player.x, player.y);
+      fire.reuse(unit.x, unit.y);
     }
 
     this._firesCreatedCount++;

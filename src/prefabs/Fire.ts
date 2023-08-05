@@ -2,7 +2,7 @@ import type { Scene } from "phaser";
 
 import { MovableSprite, MovableSpriteProps } from "./MovableSprite";
 
-import type { Player } from "./Player";
+import type { Enemy, BulletConfig } from "./Enemy";
 
 class Fire extends MovableSprite {
   protected _velocity: number;
@@ -13,22 +13,26 @@ class Fire extends MovableSprite {
     this._velocity = config.velocity;
   }
 
-  private static _generateAttributes(player: Player) {
-    const x = player.x + player.width / 2;
-    const y = player.y;
+  private static _generateAttributes(unit: Enemy) {
+    const x = unit.x;
+    const y = unit.y;
 
     return { x, y };
   }
 
-  public static generate(player: Player, scene: Scene) {
-    const { x, y } = Fire._generateAttributes(player);
+  public static generate(
+    unit: Enemy,
+    { velocity, textureName }: BulletConfig,
+    scene: Scene
+  ) {
+    const { x, y } = Fire._generateAttributes(unit);
 
     return new Fire({
       x,
       y,
       scene,
-      velocity: 500,
-      textureName: "fire",
+      velocity,
+      textureName,
     });
   }
 }

@@ -4,9 +4,6 @@ import { Enemy } from "./Enemy";
 import { Fires } from "./Fires";
 
 class Player extends Enemy {
-  private _fires: Fires;
-  private _timer: Phaser.Time.TimerEvent;
-
   constructor(scene: GameScene) {
     super({
       x: 300,
@@ -14,33 +11,14 @@ class Player extends Enemy {
       velocity: 500,
       textureName: "dragon",
       frame: "dragon1",
+      bulletConfig: {
+        delay: 500,
+        velocity: 750,
+        textureName: "fire",
+        origin: { x: 1, y: 0.5 },
+      },
       scene,
     });
-
-    this._velocity = 450;
-
-    this._init();
-  }
-
-  protected _init() {
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this._velocity = 500;
-
-    this._fires = new Fires(this.scene);
-
-    this._timer = this.scene.time.addEvent({
-      loop: true,
-      delay: 500,
-      callback: this._onTimerTick,
-      callbackScope: this,
-    });
-
-    this._fires.createFire(this);
-  }
-
-  private _onTimerTick() {
-    this._fires.createFire(this);
   }
 
   public move() {

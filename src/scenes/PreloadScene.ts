@@ -23,6 +23,7 @@ class PreloadScene extends Scene {
     );
 
     this.load.image("fire", "assets/sprites/fire.png");
+    this.load.image("bullet", "assets/sprites/bullet.png");
   }
 
   create() {

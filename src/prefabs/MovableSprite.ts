@@ -10,7 +10,7 @@ export interface MovableSpriteProps {
   scene: Scene;
 }
 
-abstract class MovableSprite extends GameObjects.Sprite {
+class MovableSprite extends GameObjects.Sprite {
   protected _velocity: number;
 
   constructor({
@@ -25,10 +25,6 @@ abstract class MovableSprite extends GameObjects.Sprite {
 
     this._velocity = velocity;
 
-    this._init();
-  }
-
-  protected _init() {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
 
