@@ -37,11 +37,11 @@ class MovableSprite extends GameObjects.Sprite {
       (this.x > this.width * 2 + this.scene.sys.canvas.width ||
         this.x < -this.width)
     ) {
-      this._setAlive(false);
+      this.setAlive(false);
     }
   }
 
-  private _setAlive(value: boolean) {
+  public setAlive(value: boolean) {
     if (this.body instanceof Physics.Arcade.Body) {
       this.body.enable = value;
       this.setVisible(value);
@@ -59,7 +59,7 @@ class MovableSprite extends GameObjects.Sprite {
     this.x = x;
     this.y = y;
 
-    this._setAlive(true);
+    this.setAlive(true);
   }
 }
 

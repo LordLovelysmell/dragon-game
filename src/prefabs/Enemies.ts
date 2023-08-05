@@ -3,16 +3,18 @@ import { Time } from "phaser";
 
 import type { Scene } from "phaser";
 
-import { Enemy } from "./Enemy";
+import { BulletConfig, Enemy } from "./Enemy";
 
 import type { GameScene } from "../scenes/GameScene";
+import { Fires } from "./Fires";
 
 class Enemies extends Physics.Arcade.Group {
   private _timer: Time.TimerEvent;
   private _enemiesMaxCount: number;
   private _enemiesCreatedCount: number;
+  private _fires: Fires;
 
-  constructor(scene: Scene) {
+  constructor(bulletConfig: BulletConfig, scene: Scene) {
     super(scene.physics.world, scene);
 
     this._enemiesMaxCount = 10;
@@ -23,6 +25,12 @@ class Enemies extends Physics.Arcade.Group {
       callback: this._onTimerTick,
       callbackScope: this,
     });
+
+    this._fires = new Fires(bulletConfig, this.scene);
+  }
+
+  public get fires() {
+    return this._fires;
   }
 
   private _onTimerTick() {
@@ -37,7 +45,7 @@ class Enemies extends Physics.Arcade.Group {
     let enemy = this.getFirstDead() as Enemy;
 
     if (!enemy) {
-      enemy = Enemy.generate(this.scene as GameScene);
+      enemy = Enemy.generate(this._fires, this.scene as GameScene);
       this.add(enemy);
     } else {
       enemy.reuse();

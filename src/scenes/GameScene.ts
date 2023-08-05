@@ -5,12 +5,14 @@ import { Player } from "../prefabs/Player";
 import { Enemy } from "../prefabs/Enemy";
 import { Enemies } from "../prefabs/Enemies";
 import { Fire } from "../prefabs/Fire";
+import { Fires } from "../prefabs/Fires";
+import { MovableSprite } from "../prefabs/MovableSprite";
 
 class GameScene extends Scene {
   private _player: Player;
-  private _enemy: Enemy;
   private _cursors: Types.Input.Keyboard.CursorKeys;
   private _background: any;
+  private _enemies: Enemies;
 
   constructor(config: Types.Core.GameConfig) {
     super("Game");
@@ -23,9 +25,53 @@ class GameScene extends Scene {
   create() {
     this._createBackground();
     this._player = new Player(this);
-    const enemies = new Enemies(this);
-    // const fire = Fire.generate(this._player, this);
-    // fire.move();
+    this._enemies = new Enemies(
+      {
+        delay: 1000,
+        velocity: -500,
+        textureName: "bullet",
+        origin: { x: 0, y: 0.5 },
+      },
+      this
+    );
+    this._addOverlap();
+  }
+
+  private _addOverlap() {
+    // if player's fire contacts with an enemy
+    this.physics.add.overlap(
+      this._player.fires,
+      this._enemies,
+      this._onOverlap,
+      undefined,
+      this
+    );
+
+    // if enemy's bullet contacts with the player
+    this.physics.add.overlap(
+      this._enemies.fires,
+      this._player,
+      this._onOverlap,
+      undefined,
+      this
+    );
+
+    // if player contacts with an enemy
+    this.physics.add.overlap(
+      this._player,
+      this._enemies,
+      this._onOverlap,
+      undefined,
+      this
+    );
+  }
+
+  private _onOverlap(
+    source: Types.Physics.Arcade.GameObjectWithBody,
+    target: Types.Physics.Arcade.GameObjectWithBody
+  ) {
+    (source as MovableSprite).setAlive(false);
+    (target as MovableSprite).setAlive(false);
   }
 
   update(time: number, deltaTime: number) {
