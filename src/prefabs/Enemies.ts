@@ -12,12 +12,13 @@ class Enemies extends Physics.Arcade.Group {
   private _timer: Time.TimerEvent;
   private _enemiesMaxCount: number;
   private _enemiesCreatedCount: number;
+  private _killedEnemiesCount = 0;
   private _fires: Fires;
 
   constructor(bulletConfig: BulletConfig, scene: Scene) {
     super(scene.physics.world, scene);
 
-    this._enemiesMaxCount = 10;
+    this._enemiesMaxCount = 3;
     this._enemiesCreatedCount = 0;
     this._timer = this.scene.time.addEvent({
       loop: true,
@@ -46,6 +47,7 @@ class Enemies extends Physics.Arcade.Group {
 
     if (!enemy) {
       enemy = Enemy.generate(this._fires, this.scene as GameScene);
+      enemy.on("killed", this._onEnemyKilled, this);
       this.add(enemy);
     } else {
       enemy.reuse();
@@ -55,6 +57,14 @@ class Enemies extends Physics.Arcade.Group {
 
     this.add(enemy);
     enemy.move();
+  }
+
+  private _onEnemyKilled() {
+    this._killedEnemiesCount++;
+
+    if (this._killedEnemiesCount === this._enemiesMaxCount) {
+      this.scene.events.emit("enemies-killed");
+    }
   }
 }
 

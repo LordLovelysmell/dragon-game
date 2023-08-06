@@ -35,6 +35,16 @@ class GameScene extends Scene {
       this
     );
     this._addOverlap();
+    this._createCompleteEvents();
+  }
+
+  private _createCompleteEvents() {
+    this._player.once("killed", this._onGameFinished, this);
+    this.events.once("enemies-killed", this._onGameFinished, this);
+  }
+
+  private _onGameFinished() {
+    this.scene.start("Start");
   }
 
   private _addOverlap() {

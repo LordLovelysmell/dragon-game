@@ -88,6 +88,10 @@ class Enemy extends MovableSprite {
   public override setAlive(value: boolean) {
     super.setAlive(value);
     this._timer.paused = !value;
+
+    if (!value) {
+      this.emit("killed");
+    }
   }
 }
 
