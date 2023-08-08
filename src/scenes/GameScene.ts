@@ -24,6 +24,7 @@ class GameScene extends Scene {
 
   create() {
     this._createBackground();
+    this._createBoomSound();
     this._score = 0;
     this._createScoreUI();
     this._player = new Player(this);
@@ -38,6 +39,16 @@ class GameScene extends Scene {
     );
     this._addOverlap();
     this._createCompleteEvents();
+  }
+
+  private _createBoomSound() {
+    if (this.sound.get("boom")) {
+      return;
+    }
+
+    if (!this.sound.get("boom")) {
+      this.sound.add("boom");
+    }
   }
 
   private _createScoreUI() {
@@ -100,6 +111,8 @@ class GameScene extends Scene {
     ) {
       if (source !== this._player && target !== this._player) {
         this._scoreUIElement.text = `Score: ${++this._score}`;
+
+        this.sound.play("boom");
 
         new Boom({
           x: target.body.x,

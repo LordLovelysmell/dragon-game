@@ -14,6 +14,7 @@ class StartScene extends Scene {
 
   create(data: CreatedData | Record<string, never>) {
     this._createBackground();
+    this._createThemeSound();
 
     if (data.score >= 0 || data.isPlayerAlive) {
       this._createStats(data as CreatedData);
@@ -24,6 +25,22 @@ class StartScene extends Scene {
     this.input.on("pointerdown", () => {
       this.scene.start("Game");
     });
+  }
+
+  private _createThemeSound() {
+    if (this.sound.get("theme")) {
+      return;
+    }
+
+    if (!this.sound.get("theme")) {
+      this.sound.add("theme");
+    }
+
+    if (this.sound.get("theme") && !this.sound.get("theme").isPlaying) {
+      this.sound.play("theme", {
+        loop: true,
+      });
+    }
   }
 
   private _createStats(data: CreatedData) {
