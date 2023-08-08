@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 
-import type { Types } from "phaser";
+import { LoadingBar } from "../classes/LoadingBar";
 
 class PreloadScene extends Scene {
   constructor() {
@@ -10,6 +10,12 @@ class PreloadScene extends Scene {
   }
 
   preload() {
+    this.add.sprite(0, 0, "bg").setOrigin(0);
+    new LoadingBar(this);
+    this.preloadAssets();
+  }
+
+  preloadAssets() {
     this.load.atlas(
       "dragon",
       "assets/sprites/dragon.png",
