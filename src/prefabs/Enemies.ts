@@ -15,7 +15,7 @@ class Enemies extends Physics.Arcade.Group {
   constructor(bulletConfig: BulletConfig, scene: Scene) {
     super(scene.physics.world, scene);
 
-    this._enemiesMaxCount = 3;
+    this._enemiesMaxCount = 15;
     this._enemiesCreatedCount = 0;
     this._timer = this.scene.time.addEvent({
       loop: true,
