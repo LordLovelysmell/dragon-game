@@ -1,7 +1,6 @@
 import { Physics } from "phaser";
 import type { GameScene } from "../scenes/GameScene";
 import { Enemy } from "./Enemy";
-import { Fires } from "./Fires";
 
 class Player extends Enemy {
   constructor(scene: GameScene) {

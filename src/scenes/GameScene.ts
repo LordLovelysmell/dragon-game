@@ -1,6 +1,5 @@
-import { Scene } from "phaser";
+import { Scene, Types } from "phaser";
 
-import type { Types } from "phaser";
 import { Player } from "../prefabs/Player";
 import { Enemies } from "../prefabs/Enemies";
 import { MovableSprite } from "../prefabs/MovableSprite";
@@ -112,7 +111,7 @@ class GameScene extends Scene {
       if (source !== this._player && target !== this._player) {
         this._scoreUIElement.text = `Score: ${++this._score}`;
 
-        this.sound.play("boom");
+        this.sound.play("boom", { volume: 0.1 });
 
         new Boom({
           x: target.body.x,

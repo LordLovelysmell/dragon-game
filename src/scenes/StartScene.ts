@@ -1,6 +1,4 @@
-import { Scene } from "phaser";
-
-import type { Types } from "phaser";
+import { Scene, Types } from "phaser";
 
 interface CreatedData {
   score: number;
@@ -39,6 +37,7 @@ class StartScene extends Scene {
     if (this.sound.get("theme") && !this.sound.get("theme").isPlaying) {
       this.sound.play("theme", {
         loop: true,
+        volume: 0.2,
       });
     }
   }

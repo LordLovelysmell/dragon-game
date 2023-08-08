@@ -1,6 +1,4 @@
-import { Physics } from "phaser";
-
-import type { Scene } from "phaser";
+import { Physics, Scene } from "phaser";
 
 import { Fire } from "./Fire";
 

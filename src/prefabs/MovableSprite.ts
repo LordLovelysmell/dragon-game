@@ -1,5 +1,4 @@
-import { GameObjects, Physics } from "phaser";
-import type { Textures, Scene } from "phaser";
+import { GameObjects, Physics, Textures, Scene } from "phaser";
 
 export interface MovableSpriteProps {
   x: number;

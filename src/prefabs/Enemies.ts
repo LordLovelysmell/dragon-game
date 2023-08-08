@@ -1,11 +1,8 @@
-import { Physics } from "phaser";
-import { Time } from "phaser";
-
-import type { Scene } from "phaser";
-
-import { BulletConfig, Enemy } from "./Enemy";
+import { Physics, Time, Scene } from "phaser";
 
 import type { GameScene } from "../scenes/GameScene";
+
+import { BulletConfig, Enemy } from "./Enemy";
 import { Fires } from "./Fires";
 
 class Enemies extends Physics.Arcade.Group {

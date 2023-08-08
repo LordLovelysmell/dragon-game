@@ -1,7 +1,5 @@
 import { Scene } from "phaser";
 
-import type { Types } from "phaser";
-
 class BootScene extends Scene {
   constructor() {
     super("Boot");
