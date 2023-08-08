@@ -13,6 +13,8 @@ class GameScene extends Scene {
   private _cursors: Types.Input.Keyboard.CursorKeys;
   private _background: any;
   private _enemies: Enemies;
+  private _score = 0;
+  private _scoreUIElement: Phaser.GameObjects.Text;
 
   constructor(config: Types.Core.GameConfig) {
     super("Game");
@@ -24,6 +26,8 @@ class GameScene extends Scene {
 
   create() {
     this._createBackground();
+    this._score = 0;
+    this._createScoreUI();
     this._player = new Player(this);
     this._enemies = new Enemies(
       {
@@ -38,13 +42,25 @@ class GameScene extends Scene {
     this._createCompleteEvents();
   }
 
+  private _createScoreUI() {
+    this._scoreUIElement = this.add.text(50, 50, "Score: 0", {
+      fontFamily: "JingleStar",
+      fontSize: "32px",
+    });
+
+    this._scoreUIElement.setDepth(1);
+  }
+
   private _createCompleteEvents() {
     this._player.once("killed", this._onGameFinished, this);
     this.events.once("enemies-killed", this._onGameFinished, this);
   }
 
   private _onGameFinished() {
-    this.scene.start("Start");
+    this.scene.start("Start", {
+      score: this._score,
+      isPlayerAlive: this._player.active,
+    });
   }
 
   private _addOverlap() {
@@ -80,6 +96,10 @@ class GameScene extends Scene {
     source: Types.Physics.Arcade.GameObjectWithBody,
     target: Types.Physics.Arcade.GameObjectWithBody
   ) {
+    if (source !== this._player && target !== this._player) {
+      this._scoreUIElement.text = `Score: ${++this._score}`;
+    }
+
     (source as MovableSprite).setAlive(false);
     (target as MovableSprite).setAlive(false);
   }
