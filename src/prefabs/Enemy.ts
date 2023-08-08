@@ -85,6 +85,10 @@ class Enemy extends MovableSprite {
     super.reuse(x, y);
   }
 
+  protected _isDead(): boolean {
+    return this.x < -this.width;
+  }
+
   public override setAlive(value: boolean) {
     super.setAlive(value);
     this._timer.paused = !value;

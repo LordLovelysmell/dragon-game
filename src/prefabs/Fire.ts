@@ -35,6 +35,10 @@ class Fire extends MovableSprite {
       textureName,
     });
   }
+
+  protected _isDead(): boolean {
+    return this.x > this.width * 2 + this.scene.sys.canvas.width;
+  }
 }
 
 export { Fire };

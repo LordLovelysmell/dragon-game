@@ -2,11 +2,9 @@ import { Scene } from "phaser";
 
 import type { Types } from "phaser";
 import { Player } from "../prefabs/Player";
-import { Enemy } from "../prefabs/Enemy";
 import { Enemies } from "../prefabs/Enemies";
-import { Fire } from "../prefabs/Fire";
-import { Fires } from "../prefabs/Fires";
 import { MovableSprite } from "../prefabs/MovableSprite";
+import { Boom } from "../prefabs/Boom";
 
 class GameScene extends Scene {
   private _player: Player;
@@ -96,12 +94,23 @@ class GameScene extends Scene {
     source: Types.Physics.Arcade.GameObjectWithBody,
     target: Types.Physics.Arcade.GameObjectWithBody
   ) {
-    if (source !== this._player && target !== this._player) {
-      this._scoreUIElement.text = `Score: ${++this._score}`;
-    }
+    if (
+      source.body.x < this.sys.canvas.width - source.body.width ||
+      target.body.x < this.sys.canvas.width - target.body.width
+    ) {
+      if (source !== this._player && target !== this._player) {
+        this._scoreUIElement.text = `Score: ${++this._score}`;
 
-    (source as MovableSprite).setAlive(false);
-    (target as MovableSprite).setAlive(false);
+        new Boom({
+          x: target.body.x,
+          y: target.body.y,
+          scene: this,
+        });
+      }
+
+      (source as MovableSprite).setAlive(false);
+      (target as MovableSprite).setAlive(false);
+    }
   }
 
   update(time: number, deltaTime: number) {

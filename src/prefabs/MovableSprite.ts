@@ -32,13 +32,13 @@ class MovableSprite extends GameObjects.Sprite {
   }
 
   private _onUpdate() {
-    if (
-      this.active &&
-      (this.x > this.width * 2 + this.scene.sys.canvas.width ||
-        this.x < -this.width)
-    ) {
+    if (this.active && this._isDead()) {
       this.setAlive(false);
     }
+  }
+
+  protected _isDead() {
+    return false;
   }
 
   public setAlive(value: boolean) {

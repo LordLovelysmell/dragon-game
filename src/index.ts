@@ -7,6 +7,8 @@ import { GameScene } from "./scenes/GameScene";
 
 import "./index.scss";
 
+const debugMode = false;
+
 const config: Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 1280,
@@ -15,7 +17,7 @@ const config: Types.Core.GameConfig = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true,
+      debug: debugMode,
     },
   },
 };
